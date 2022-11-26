@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { Store } from '../Store';
 import { getError } from '../utils';
@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import { Helmet } from 'react-helmet-async';
 import Button from 'react-bootstrap/Button';
-import { useContext, useEffect, useReducer, useState } from 'react';
+import { useContext, useReducer, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const reducer = (state, action) => {
@@ -158,7 +158,7 @@ export default function ProductCreate() {
                         value={consoleAvailable}
                         onChange={(e) => setconsoleAvailable(e.target.value)}
                         required
-                        placeholder='XBOX, PlayStaion, PC'
+                        placeholder='XBOX, PlayStation, PC'
                     />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="image">
