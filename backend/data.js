@@ -7,7 +7,7 @@ const data = {
             inStock: '30',
             consoleAvailable: 'PlayStation',
             image: '/images/GOWRagnarok.jpg',
-            price: '$ 300.000',
+            price: '300.000',
             rating: '4.8',
             mode: 'Single Player',
             slug: 'god-of-war-ragnarok'
@@ -19,7 +19,7 @@ const data = {
             inStock: '30',
             consoleAvailable: 'PlayStation',
             image: '/images/GOWRagnarok.jpg',
-            price: '$ 300.000',
+            price: '300.000',
             rating: '4.8',
             mode: 'Single Player',
             slug: 'god-of-war-ragnarok2'
@@ -31,7 +31,7 @@ const data = {
             inStock: '30',
             consoleAvailable: 'PlayStation',
             image: '/images/GOWRagnarok.jpg',
-            price: '$ 300.000',
+            price: '300.000',
             rating: '3.8',
             mode: 'Single Player',
             slug: 'god-of-war-ragnarok3'
@@ -43,7 +43,7 @@ const data = {
             inStock: '30',
             consoleAvailable: 'PlayStation',
             image: '/images/GOWRagnarok.jpg',
-            price: '$ 300.000',
+            price: '300.000',
             rating: '3.0',
             mode: 'Single Player',
             slug: 'god-of-war-ragnarok4'
