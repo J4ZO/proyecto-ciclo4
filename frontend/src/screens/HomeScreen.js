@@ -4,7 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Product from '../components/Product';
 import { Helmet } from 'react-helmet-async'; // Cambia el nombre de la pagina
-// import data from '../data';
+import LoadingBox from '../components/LoadingBox';
+import MessageBox from '../components/MessageBox';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -48,9 +49,9 @@ function HomeScreen() {
             <h1>Productos Populares</h1>
             <div className="products">
                 {loading ? (
-                    <div>Cargando...</div>
+                    <LoadingBox /> // Muestra el circulo animado de carga
                 ) : error ? (
-                    <div>{error}</div>
+                    <MessageBox variant="danger">{error}</MessageBox> // Muestra un mensaje de error
                 ) : (
                     <Row>
                         {products.map((product) => (
