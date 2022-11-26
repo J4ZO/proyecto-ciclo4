@@ -12,7 +12,8 @@ import { Helmet } from 'react-helmet-async';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { getError } from '../utils';
-
+import { useContext } from 'react';
+import { Store } from '../Store';
 
 
 const reducer = (state, action) => {
@@ -53,6 +54,14 @@ function ProductScreen() {
         };
         fetchData();
     }, [slug]);
+
+    const { state, dispatch: ctxDispatch } = useContext(Store); // permite comunicar componentes funcionales a través del contexto en React.
+    const addToCart = () => {
+        ctxDispatch({
+            type: 'CART_ADD_ITEM', // Se activa el caso del Store
+            payload: { ...product, quantity: 1 }, // Aumenta uno al tener un nuevo objeto
+        });
+    };
 
     return loading ? (
         <LoadingBox />
@@ -114,7 +123,7 @@ function ProductScreen() {
                                 {product.inStock > 0 && (
                                     <ListGroup.Item>
                                         <div className="d-grid">
-                                            <Button variant="primary">Añadir al carro</Button>
+                                            <Button onClick={addToCart} variant="primary">Añadir al carro</Button>
                                         </div>
                                     </ListGroup.Item>
                                 )}
