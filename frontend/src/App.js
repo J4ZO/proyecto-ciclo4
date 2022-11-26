@@ -8,6 +8,7 @@ import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
 import { useContext } from 'react';
 import { Store } from './Store';
+import CartScreen from './screens/CartScreen';
 
 function App() {
   const { state } = useContext(Store);
@@ -25,8 +26,8 @@ function App() {
                 <Link to="/cart" className="nav-link">
                   Cart
                   {cart.cartItems.length > 0 && (
-                    <Badge pill bg="danger">
-                      {cart.cartItems.length}
+                    <Badge pill bg="danger"> {/* Si hay elemntos en el carrito, se muestra el icono con la cantidad */}
+                      {cart.cartItems.reduce((a, i) => a + i.quantity, 0)} {/* Suma cada click al añadir al carrito */}
                     </Badge>
                   )}
                 </Link>
@@ -38,6 +39,7 @@ function App() {
           <Container className="mt-3">
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

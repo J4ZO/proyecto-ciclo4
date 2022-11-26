@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -31,6 +31,7 @@ const reducer = (state, action) => {
 
 
 function ProductScreen() {
+    const navigate = useNavigate(); // Se usa para navegar en otras paginas
     const params = useParams(); // Trae los parametros del elemento
     const { slug } = params; // Solo se selecciona el slug que unico
 
@@ -56,11 +57,21 @@ function ProductScreen() {
     }, [slug]);
 
     const { state, dispatch: ctxDispatch } = useContext(Store); // permite comunicar componentes funcionales a través del contexto en React.
-    const addToCart = () => {
+    const { cart } = state;
+    const addToCart = async () => {
+        const existItem = cart.cartItems.find((x) => x._id === product._id);
+        const quantity = existItem ? existItem.quantity + 1 : 1; // Si hay item lo aumenta en 1
+        const { data } = await axios.get(`/api/products/${product._id}`);
+        if (data.countInStock < quantity) {
+            window.alert('Lo siento. Producto agotado');
+            return;
+        }
         ctxDispatch({
             type: 'CART_ADD_ITEM', // Se activa el caso del Store
-            payload: { ...product, quantity: 1 }, // Aumenta uno al tener un nuevo objeto
+            payload: { ...product, quantity }, // Aumenta uno al tener un nuevo objeto
+
         });
+        navigate('/cart');
     };
 
     return loading ? (
