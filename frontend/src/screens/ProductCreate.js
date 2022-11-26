@@ -208,7 +208,7 @@ export default function ProductCreate() {
                 </Form.Group>
 
                 <div className="mb-3">
-                    <Button type="submit" >Update</Button>
+                    <Button type="submit" >Crear</Button>
                 </div>
             </Form>
         </Container>
