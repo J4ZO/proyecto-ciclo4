@@ -1,7 +1,6 @@
 import express from 'express';
 import Product from '../models/productModel.js';
 import expressAsyncHandler from 'express-async-handler';
-import { isAuth, isAdmin } from '../utils.js';
 
 const productRouter = express.Router();
 
@@ -29,8 +28,6 @@ productRouter.get('/:id', async (req, res) => {
 
 productRouter.post(
     '/',
-    isAuth,
-    isAdmin,
     expressAsyncHandler(async (req, res) => {
         const newProduct = new Product({
             name: 'sample name ' + Date.now(),
@@ -49,9 +46,7 @@ productRouter.post(
 );
 
 productRouter.get(
-    '/admin',
-    isAuth,
-    isAdmin,
+    '/products',
     expressAsyncHandler(async (req, res) => {
         const { query } = req;
         const page = query.page || 1;
@@ -70,6 +65,36 @@ productRouter.get(
     })
 );
 
+productRouter.post(
+    '/newproducts',
+    expressAsyncHandler(async (req, res) => {
+        const newProduct = new Product({
+            name: req.body.name,
+            classification: req.body.classification,
+            inStock: req.body.inStock,
+            consoleAvailable: req.body.consoleAvailable,
+            image: req.body.image,
+            price: req.body.price,
+            rating: req.body.rating,
+            mode: req.body.mode,
+            slug: req.body.slug,
+        });
+        const product = await newProduct.save();
+        res.send({
+            _id: product._id,
+            name: product.name,
+            classification: product.classification,
+            inStock: product.inStock,
+            consoleAvailable: product.consoleAvailable,
+            image: product.image,
+            price: product.price,
+            rating: product.rating,
+            mode: product.mode,
+            slug: product.slug,
+
+        });
+    })
+);
 
 
 

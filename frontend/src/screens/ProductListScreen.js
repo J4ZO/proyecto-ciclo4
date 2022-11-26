@@ -1,145 +1,166 @@
-import React, { useContext, useEffect, useReducer } from 'react';
-import axios from 'axios';
-import { Store } from '../Store';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import { toast } from 'react-toastify';
-import { getError } from '../utils';
+// import { useNavigate, useParams } from 'react-router-dom';
+// import axios from 'axios';
+// import { Store } from '../Store';
+// import { getError } from '../utils';
+// import Container from 'react-bootstrap/Container';
+// import Form from 'react-bootstrap/Form';
+// import { Helmet } from 'react-helmet-async';
+// import LoadingBox from '../components/LoadingBox';
+// import MessageBox from '../components/MessageBox';
+// import Button from 'react-bootstrap/Button';
+// import { useContext, useReducer, useState } from 'react';
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'FETCH_REQUEST':
-            return { ...state, loading: true };
-        case 'FETCH_SUCCESS':
-            return {
-                ...state,
-                products: action.payload.products,
-                page: action.payload.page,
-                pages: action.payload.pages,
-                loading: false,
-            };
-        case 'FETCH_FAIL':
-            return { ...state, loading: false, error: action.payload };
-        case 'CREATE_REQUEST':
-            return { ...state, loadingCreate: true };
-        case 'CREATE_SUCCESS':
-            return {
-                ...state,
-                loadingCreate: false,
-            };
-        case 'CREATE_FAIL':
-            return { ...state, loadingCreate: false };
-        default:
-            return state;
-    }
-};
+// const reducer = (state, action) => {
+//     switch (action.type) {
+//         case 'FETCH_REQUEST':
+//             return { ...state, loading: true };
+//         case 'FETCH_SUCCESS':
+//             return { ...state, loading: false };
+//         case 'FETCH_FAIL':
+//             return { ...state, loading: false, error: action.payload };
+//         default:
+//             return state;
+//     }
+// };
+// export default function ProductEditScreen() {
+//     const params = useParams(); // /product/:id
+//     const { id: productId } = params;
 
-export default function ProductListScreen() {
-    const [{ loading, error, products, pages, loadingCreate }, dispatch] =
-        useReducer(reducer, {
-            loading: true,
-            error: '',
-        });
-    const navigate = useNavigate();
-    const { search } = useLocation();
-    const sp = new URLSearchParams(search);
-    const page = sp.get('page') || 1;
+//     const { state } = useContext(Store);
+//     const { userInfo } = state;
+//     const [{ loading, error }, dispatch] = useReducer(reducer, {
+//         loading: true,
+//         error: '',
+//     });
 
-    const { state } = useContext(Store);
-    const { userInfo } = state;
-    const createHandler = async () => {
-        if (window.confirm('Estas seguro?')) {
-            try {
-                dispatch({ type: 'CREATE_REQUEST' });
-                const { data } = await axios.post(
-                    '/api/products',
-                    {},
-                    {
-                        headers: { Authorization: `Bearer ${userInfo.token}` },
-                    }
-                );
-                toast.success('product created successfully');
-                dispatch({ type: 'CREATE_SUCCESS' });
-                navigate(`/admin/product/${data.product._id}`);
-            } catch (err) {
-                toast.error(getError(error));
-                dispatch({
-                    type: 'CREATE_FAIL',
-                });
-            }
-        }
-    };
+//     const [name, setName] = useState('');
+//     const [classification, setclassification] = useState('');
+//     const [inStock, setinStock] = useState('');
+//     const [consoleAvailable, setconsoleAvailable] = useState('');
+//     const [image, setimage] = useState('');
+//     const [price, setprice] = useState('');
+//     const [rating, setrating] = useState('');
+//     const [mode, setmode] = useState('');
+//     const [slug, setslug] = useState('');
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { data } = await axios.get(`/api/products/admin?page=${page} `, {
-                    headers: { Authorization: `Bearer ${userInfo.token}` },
-                });
+//     useEffect(() => {
+//         const fetchData = async () => {
+//             try {
+//                 dispatch({ type: 'FETCH_REQUEST' });
+//                 const { data } = await axios.get(`/api/products/${productId}`);
+//                 setName(data.name);
+//                 setclassification(data.classification);
+//                 setinStock(data.inStock);
+//                 setconsoleAvailable(data.consoleAvailable);
+//                 setimage(data.image);
+//                 setprice(data.price);
+//                 setrating(data.rating);
+//                 setmode(data.mode);
+//                 setslug(data.slug);
+//                 dispatch({ type: 'FETCH_SUCCESS' });
+//             } catch (err) {
+//                 dispatch({
+//                     type: 'FETCH_FAIL',
+//                     payload: getError(err),
+//                 });
+//             }
+//         };
+//         fetchData();
+//     }, [productId]);
 
-                dispatch({ type: 'FETCH_SUCCESS', payload: data });
-            } catch (err) { }
-        };
-        fetchData();
-    }, [page, userInfo]);
+//     return (
+//         <Container className="small-container">
+//             <Helmet>
+//                 <title>Edit Product ${productId}</title>
+//             </Helmet>
+//             <h1>Edit Product {productId}</h1>
 
-    return (
-        <div>
-            <Row>
-                <Col>
-                    <h1>Productos</h1>
-                </Col>
-                <Col className="col text-end">
-                    <div>
-                        <Button type="button" onClick={createHandler}>
-                            Crear Producto
-                        </Button>
-                    </div>
-                </Col>
-            </Row>
+//             {loading ? (
+//                 <LoadingBox></LoadingBox>
+//             ) : error ? (
+//                 <MessageBox variant="danger">{error}</MessageBox>
+//             ) : (
+//                 <Form>
+//                     <Form.Group className="mb-3" controlId="name">
+//                         <Form.Label>Name</Form.Label>
+//                         <Form.Control
+//                             value={name}
+//                             onChange={(e) => setName(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+//                     <Form.Group className="mb-3" controlId="classification">
+//                         <Form.Label>Clasificacion</Form.Label>
+//                         <Form.Control
+//                             value={classification}
+//                             onChange={(e) => setclassification(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
 
-            {loadingCreate && <LoadingBox></LoadingBox>}
-            {loading ? (
-                <LoadingBox></LoadingBox>
-            ) : error ? (
-                <MessageBox variant="danger">{error}</MessageBox>
-            ) : (
-                <>
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>NOMBRE</th>
-                                <th>PRECIO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.map((product) => (
-                                <tr key={product._id}>
-                                    <td>{product._id}</td>
-                                    <td>{product.name}</td>
-                                    <td>{product.price}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div>
-                        {[...Array(pages).keys()].map((x) => (
-                            <Link
-                                className={x + 1 === Number(page) ? 'btn text-bold' : 'btn'}
-                                key={x + 1}
-                                to={`/admin/products?page=${x + 1}`}
-                            >
-                                {x + 1}
-                            </Link>
-                        ))}
-                    </div>
-                </>
-            )}
-        </div>
-    );
-}
+//                     <Form.Group className="mb-3" controlId="inStock">
+//                         <Form.Label>En stock</Form.Label>
+//                         <Form.Control
+//                             value={inStock}
+//                             onChange={(e) => setinStock(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+                    
+//                     <Form.Group className="mb-3" controlId="consoleAvailable">
+//                         <Form.Label>Disponibilidad</Form.Label>
+//                         <Form.Control
+//                             value={consoleAvailable}
+//                             onChange={(e) => setconsoleAvailable(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+//                     <Form.Group className="mb-3" controlId="image">
+//                         <Form.Label>Image File</Form.Label>
+//                         <Form.Control
+//                             value={image}
+//                             onChange={(e) => setimage(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+//                     <Form.Group className="mb-3" controlId="price">
+//                         <Form.Label>Precio</Form.Label>
+//                         <Form.Control
+//                             value={price}
+//                             onChange={(e) => setprice(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+//                     <Form.Group className="mb-3" controlId="rating">
+//                         <Form.Label>Rating</Form.Label>
+//                         <Form.Control
+//                             value={rating}
+//                             onChange={(e) => setrating(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+//                     <Form.Group className="mb-3" controlId="mode">
+//                         <Form.Label>Modo</Form.Label>
+//                         <Form.Control
+//                             value={mode}
+//                             onChange={(e) => setmode(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+//                     <Form.Group className="mb-3" controlId="slug">
+//                         <Form.Label>Slug</Form.Label>
+//                         <Form.Control
+//                             value={slug}
+//                             onChange={(e) => setslug(e.target.value)}
+//                             required
+//                         />
+//                     </Form.Group>
+            
+//                     <div className="mb-3">
+//                         <Button type="submit">Update</Button>
+//                     </div>
+//                 </Form>
+//             )}
+//         </Container>
+//     );
+// }

@@ -20,10 +20,8 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import ProtectedRoute from './components/ProtectedRoute';
-import DashboardScreen from './screens/DashboardScreen';
-import AdminRoute from './components/AdminRoute';
-import ProductListScreen from './screens/ProductListScreen';
+// import ProductListScreen from './screens/ProductListScreen';
+import ProductCreate from './screens/ProductCreate';
 
 
 function App() {
@@ -45,7 +43,7 @@ function App() {
           <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
               <LinkContainer to="/">
-                <Navbar.Brand>Titulo</Navbar.Brand>
+                <Navbar.Brand>Game-Tricks</Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
@@ -61,11 +59,15 @@ function App() {
                   {userInfo ? (
                     <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                       <LinkContainer to="/profile">
-                        <NavDropdown.Item>Perfil Usuario</NavDropdown.Item>
+                        <NavDropdown.Item>Perfil Usuarios</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/orderhistory">
                         <NavDropdown.Item>Historial</NavDropdown.Item>
                       </LinkContainer>
+                      <LinkContainer to="/newproducts">
+                        <NavDropdown.Item>Productos</NavDropdown.Item>
+                      </LinkContainer>
+
                       <NavDropdown.Divider />
                       <Link
                         className="dropdown-item"
@@ -80,22 +82,7 @@ function App() {
                       Sign In
                     </Link>
                   )}
-                  {userInfo && userInfo.isAdmin && (
-                    <NavDropdown title="Admin" id="admin-nav-dropdown">
-                      <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Productos</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Ordenes</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Usuarios</NavDropdown.Item>
-                      </LinkContainer>
-                    </NavDropdown>
-                  )}
+
                 </Nav>
               </Navbar.Collapse>
             </Container>
@@ -114,42 +101,31 @@ function App() {
               <Route
                 path="/order/:id"
                 element={
-                  <ProtectedRoute>
-                    <OrderScreen />
-                  </ProtectedRoute>
+
+                  <OrderScreen />
+
                 }
               ></Route>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/orderhistory" element={
-                <ProtectedRoute>
-                  <OrderHistoryScreen />
-                </ProtectedRoute>
+
+                <OrderHistoryScreen />
+
               } />
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute>
-                    <ProfileScreen />
-                  </ProtectedRoute>
+
+                  <ProfileScreen />
+
                 }
               />
-              {/* Admin Rutas */}
               <Route
-                path="/admin/dashboard"
+                path="/newproducts"
                 element={
-                  <AdminRoute>
-                    <DashboardScreen />
-                  </AdminRoute>
+                  <ProductCreate />
                 }
-              ></Route>
-              <Route
-                path="/admin/products"
-                element={
-                  <AdminRoute>
-                    <ProductListScreen />
-                  </AdminRoute>
-                }
-              ></Route>
+              />
             </Routes>
           </Container>
         </main>

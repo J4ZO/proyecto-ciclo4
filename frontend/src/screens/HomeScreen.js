@@ -44,7 +44,7 @@ function HomeScreen() {
     return (
         <div>
             <Helmet>
-                <title>Titulo</title> {/* Es el nombre de la pagina*/}
+                <title>Game-Tricks</title> {/* Es el nombre de la pagina*/}
             </Helmet>
             <h1>Productos Populares</h1>
             <div className="products">
