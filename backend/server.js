@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -16,10 +17,17 @@ mongoose
         console.log(err.message);
     });
 const app = express(); // Retorna un objeto que es un express app
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Convierte el formulario en un archivo json
+
 
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
+app.use('/api/users', userRouter);
 
+app.use((err, req, res, next) => {
+    res.status(500).send({ message: err.message });
+});
 const port = process.env.PORT || 5000; // Se selecciona el puerto 5000, luego lo cambiamos
 
 app.listen(port, () => {

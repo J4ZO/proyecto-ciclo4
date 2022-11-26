@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema(
         price: { type: Number },
         rating: { type: Number },
         mode: { type: String },
-        slug: { type: String, unique: true }
+        slug: { type: String }
 
     },
     {
