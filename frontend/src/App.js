@@ -1,33 +1,22 @@
-import data from "./data";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomeScreen from "./screens/HomeScreens";
+import ProductScreen from './screens/ProductScreen';
 
 function App() {
   return (
-    <div >
-      <header>
-        <a href="/">Hola mundo</a> {/*Titulo de nuestro proyecto*/}
-      </header>
-      <main>
-        <h1>Productos Populares</h1>
-        <div className="products"> {/*Contenedor de productos*/}
-          {data.products.map((product) => (
-            // Trae a los productos y le aplica lo siguiente a cada uno
-            <div className="product" key={product.slug}>
-              <a href={`/product/${product.slug}`}>
-                <img src={product.image} alt={product.name}></img>
-              </a>
-              <div className="info-product">
-                <a href={`/product/${product.slug}`}>
-                  <p>{product.name}</p>
-                </a>
-                <p><strong>{product.price}</strong></p>
-                <button>Add to cart</button>
-              </div>
-            </div>
-
-          ))}
-        </div>
-      </main>
-    </div>
+    <BrowserRouter> {/* Se establece que se trabajaran con rutas*/}
+      <div >
+        <header>
+          <a href="/">Hola mundo</a> {/*Titulo de nuestro proyecto*/}
+        </header>
+        <main>
+          <Routes>  {/*Etiquieta de las rutas*/}
+            <Route path="/product/:slug" element={<ProductScreen />} /> {/* Muestra los detalles del objeto en la pagina correspondiente*/}
+            <Route path="/" element={<HomeScreen />} /> {/*Trae el elemento de screens*/}
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
 
