@@ -1,0 +1,21 @@
+{
+  "name": "proyecto-ciclo4",
+  "version": "1.0.0",
+  "description": "Proyecto ciclo 4 web a nombre de Jaider Alexander Zapata Osorio y Ninfa Paola Osorio Echeverry",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J4ZO/proyecto-ciclo4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/J4ZO/proyecto-ciclo4/issues"
+  },
+  "homepage": "https://github.com/J4ZO/proyecto-ciclo4#readme"
+}
