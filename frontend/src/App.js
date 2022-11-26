@@ -1,19 +1,30 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HomeScreen from "./screens/HomeScreens";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import { LinkContainer } from 'react-router-bootstrap';
 
 function App() {
   return (
-    <BrowserRouter> {/* Se establece que se trabajaran con rutas*/}
-      <div >
+    <BrowserRouter>
+      <div className="d-flex flex-column site-container">
         <header>
-          <a href="/">Hola mundo</a> {/*Titulo de nuestro proyecto*/}
+          <Navbar bg="dark" variant="dark">
+            <Container>
+              <LinkContainer to="/">
+                <Navbar.Brand>Titulo</Navbar.Brand>
+              </LinkContainer>
+            </Container>
+          </Navbar>
         </header>
         <main>
-          <Routes>  {/*Etiquieta de las rutas*/}
-            <Route path="/product/:slug" element={<ProductScreen />} /> {/* Muestra los detalles del objeto en la pagina correspondiente*/}
-            <Route path="/" element={<HomeScreen />} /> {/*Trae el elemento de screens*/}
-          </Routes>
+          <Container>
+            <Routes>
+              <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/" element={<HomeScreen />} />
+            </Routes>
+          </Container>
         </main>
       </div>
     </BrowserRouter>

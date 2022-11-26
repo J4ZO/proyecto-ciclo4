@@ -32,7 +32,7 @@ const data = {
             consoleAvailable: 'PlayStation',
             image: '/images/GOWRagnarok.jpg',
             price: '$ 300.000',
-            rating: '4.8',
+            rating: '3.8',
             mode: 'Single Player',
             slug: 'god-of-war-ragnarok3'
         },
@@ -44,7 +44,7 @@ const data = {
             consoleAvailable: 'PlayStation',
             image: '/images/GOWRagnarok.jpg',
             price: '$ 300.000',
-            rating: '4.8',
+            rating: '3.0',
             mode: 'Single Player',
             slug: 'god-of-war-ragnarok4'
         }
