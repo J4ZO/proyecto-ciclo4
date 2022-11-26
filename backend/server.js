@@ -1,5 +1,18 @@
 import express from "express";
 import data from './data.js';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+mongoose
+    .connect(process.env.MONGODB_URI) // Se conecta a la base de datos
+    .then(() => {
+        console.log('Se conecto a la base de datos');
+    })
+    .catch((err) => {
+        console.log(err.message);
+    });
 const app = express(); // Retorna un objeto que es un express app
 
 /* Recibe dos parametos, la url de la api y 
