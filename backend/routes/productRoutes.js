@@ -1,5 +1,6 @@
 import express from 'express';
 import Product from '../models/productModel.js';
+import expressAsyncHandler from 'express-async-handler';
 
 const productRouter = express.Router();
 
@@ -24,6 +25,8 @@ productRouter.get('/:id', async (req, res) => {
         res.status(404).send({ message: 'Producto no encontrado' });
     }
 });
+
+
 
 
 export default productRouter;
